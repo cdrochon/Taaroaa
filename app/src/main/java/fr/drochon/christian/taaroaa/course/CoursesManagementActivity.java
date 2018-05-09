@@ -27,7 +27,6 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -39,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -258,7 +258,8 @@ public class CoursesManagementActivity extends BaseActivity {
     // --------------------
 
     /**
-     * Methode permettant la creation d'un cours dans le bdd. En cas d'insertion ou de probleme, la fonction renverra une notification à l'utilisateur.
+     * Methode permettant la creation d'un cours dans le bdd. En cas d'insertion ou de probleme,
+     * la fonction renverra une notification à l'utilisateur.
      */
     private void createCourseInFirebase() {
 
@@ -274,7 +275,7 @@ public class CoursesManagementActivity extends BaseActivity {
         String horaireCours = dateCoursTxt + " " + timeCoursTxt;
         //final Date horaires = stringToDate(horaireCours);
         Date horaireDuCours = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.US);
         try {
             horaireDuCours = simpleDateFormat.parse(horaireCours);
         } catch (ParseException e) {
@@ -311,6 +312,7 @@ public class CoursesManagementActivity extends BaseActivity {
                         }
                     });
         } else {
+            //TODO verifier si l'alertdialog ici affiche les bonnes informations attendues
             final AlertDialog.Builder adb = new AlertDialog.Builder(CoursesManagementActivity.this);
             adb.setTitle(R.string.alertDialog_account);
             adb.setIcon(android.R.drawable.ic_dialog_alert);

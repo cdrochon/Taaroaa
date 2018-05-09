@@ -1,4 +1,4 @@
-package fr.drochon.christian.taaroaa.course;
+package fr.drochon.christian.taaroaa.auth;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -8,21 +8,18 @@ import android.view.ViewGroup;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
+import java.util.List;
+
 import fr.drochon.christian.taaroaa.R;
-import fr.drochon.christian.taaroaa.model.Course;
+import fr.drochon.christian.taaroaa.model.User;
 
-/**
- * l'adapter s'occupe de l'ensemble du contenu alors que le viewholder s'occupe des specificités d'une cellule
- */
-public class AdapterCoursesPupils extends FirestoreRecyclerAdapter<Course, PupilsViewHolder> {
+public class AdapterSearchedUser extends FirestoreRecyclerAdapter<User, SearchedUserViewHolder> {
+
+    List<User> users;
 
 
-    //FOR COMMUNICATION
-    private Listener callback;
-
-    public AdapterCoursesPupils(FirestoreRecyclerOptions<Course> options, Listener callback) {
-        super(options);
-        this.callback = callback;
+    public AdapterSearchedUser(@NonNull FirestoreRecyclerOptions<User> userFirestoreRecyclerOptions) {
+        super(userFirestoreRecyclerOptions);
     }
 
     /**
@@ -35,8 +32,8 @@ public class AdapterCoursesPupils extends FirestoreRecyclerAdapter<Course, Pupil
      * @see #onBindViewHolder(RecyclerView.ViewHolder, int)
      */
     @Override
-    protected void onBindViewHolder(@NonNull final PupilsViewHolder holder, int position, @NonNull final Course model) {
-        holder.updateWithCourse(model);
+    protected void onBindViewHolder(@NonNull SearchedUserViewHolder holder, int position, @NonNull User model) {
+        holder.updateWithUser(model);
     }
 
     /**
@@ -47,22 +44,8 @@ public class AdapterCoursesPupils extends FirestoreRecyclerAdapter<Course, Pupil
      * @return le vue d'une cellule
      */
     @Override
-    public PupilsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PupilsViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_cell, parent, false));// creation de la viewholder avec en param la vue du layout
-    }
-
-    // --------------------
-    // INTERFACE LISTENER
-    // --------------------
-
-    @Override
-    public void onDataChanged() {
-        super.onDataChanged();
-        this.callback.onDataChanged();
-    }
-
-    public interface Listener {
-        void onDataChanged();
+    public SearchedUserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new SearchedUserViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.user_cell, parent, false));// creation de la viewholder avec en param la vue du layout
     }
 }
